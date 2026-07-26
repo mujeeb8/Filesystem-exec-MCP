@@ -104,7 +104,7 @@ npm run start   # run the compiled server
 ## Documentation
 
 Full setup instructions and a tool reference are available in
-[`docs/documentation.html`](docs/documentation.html).
+[`docs/documentation.html`](https://mujeeb8.github.io/Filesystem-exec-MCP/documentation.html).
 
 ## Privacy Policy
 
@@ -115,4 +115,4 @@ in directories you explicitly approve during setup, and only runs shell
 commands if you separately enable that option (off by default).
 
 The full privacy policy is available in
-[`docs/privacy-policy.html`](docs/privacy-policy.html).
+[`docs/privacy-policy.html`](https://mujeeb8.github.io/Filesystem-exec-MCP/privacy-policy.html).
