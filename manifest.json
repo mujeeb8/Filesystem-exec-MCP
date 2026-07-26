@@ -9,12 +9,9 @@
   "author": {
     "name": "Mujeeb ur Rehman"
   },
-  "documentation": "docs/documentation.html",
+  "documentation": "https://mujeeb8.github.io/Filesystem-exec-MCP/documentation.html",
   "privacy_policies": [
-    {
-      "name": "Privacy Policy",
-      "url": "docs/privacy-policy.html"
-    }
+    "https://mujeeb8.github.io/Filesystem-exec-MCP/privacy-policy.html"
   ],
   "server": {
     "type": "node",
