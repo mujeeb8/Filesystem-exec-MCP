@@ -1,0 +1,10 @@
+src/
+tsconfig.json
+package-lock.json
+*.log
+.git/
+.gitignore
+node_modules/.bin/
+node_modules/typescript/
+node_modules/@types/
+docs/

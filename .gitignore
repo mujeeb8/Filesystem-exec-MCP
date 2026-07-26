@@ -1,0 +1,5 @@
+/dist
+/node_modules
+.env
+AGENT.md
+*.mcpb

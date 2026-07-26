@@ -1,0 +1,79 @@
+{
+  "manifest_version": "0.3",
+  "name": "filesystem-exec-mcp-server",
+  "display_name": "Filesystem + Exec",
+  "version": "1.0.0",
+  "icon": "icon.png",
+  "description": "Filesystem tools (read/write/edit/search/move/tree) jailed to chosen directories, plus optional bash/sh/cmd/powershell command execution.",
+  "long_description": "A Model Context Protocol server that gives an AI agent a full set of filesystem tools — reading, writing, editing, searching, moving files, and walking directory trees — restricted to one or more directories you choose. It can optionally also expose command-execution tools (`run_bash`, `run_shell`, `run_cmd`, `run_powershell`, `run_command`) that run arbitrary shell commands on the host with your user privileges.\n\n**Command execution is off by default.** Turn it on only if you understand that it grants the connected agent the ability to run anything your user account can run, with no sandboxing beyond the working-directory restriction.",
+  "author": {
+    "name": "Mujeeb ur Rehman"
+  },
+  "documentation": "docs/documentation.html",
+  "privacy_policies": [
+    {
+      "name": "Privacy Policy",
+      "url": "docs/privacy-policy.html"
+    }
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/index.js",
+        "${user_config.allowed_directories}"
+      ],
+      "env": {
+        "ALLOW_EXEC": "${user_config.allow_exec}"
+      }
+    }
+  },
+  "user_config": {
+    "allowed_directories": {
+      "type": "directory",
+      "title": "Allowed Directories",
+      "description": "Directories this server may read, write, search, and (if enabled) run commands in. Nothing outside these directories is reachable.",
+      "multiple": true,
+      "required": true,
+      "default": ["${HOME}/Desktop"]
+    },
+    "allow_exec": {
+      "type": "boolean",
+      "title": "Enable command execution",
+      "description": "If enabled, exposes run_bash / run_shell / run_cmd / run_powershell / run_command, which can run ANY command on this machine within the allowed directories. Leave off unless you specifically need it.",
+      "default": false,
+      "required": false
+    }
+  },
+  "tools": [
+    { "name": "read_text_file", "description": "Read a text file, optionally just head/tail N lines" },
+    { "name": "read_media_file", "description": "Read an image/binary file as base64" },
+    { "name": "read_multiple_files", "description": "Read several files in one call" },
+    { "name": "write_file", "description": "Create or overwrite a file" },
+    { "name": "edit_file", "description": "Apply find/replace edits, with optional dry run" },
+    { "name": "create_directory", "description": "Create a directory, including parent directories" },
+    { "name": "list_directory", "description": "List entries directly inside a directory" },
+    { "name": "list_directory_with_sizes", "description": "List directory entries with file sizes, sortable" },
+    { "name": "directory_tree", "description": "Recursive JSON tree of a directory" },
+    { "name": "move_file", "description": "Move or rename a file or directory" },
+    { "name": "search_files", "description": "Recursive filename search" },
+    { "name": "get_file_info", "description": "Stat a file or directory (size, timestamps, permissions)" },
+    { "name": "list_allowed_directories", "description": "Show the configured allowed root directories" },
+    { "name": "run_bash", "description": "Run a command via /bin/bash -c (only present when command execution is enabled)" },
+    { "name": "run_shell", "description": "Run a command via /bin/sh -c (only present when command execution is enabled)" },
+    { "name": "run_cmd", "description": "Run a command via Windows cmd.exe (only present when command execution is enabled)" },
+    { "name": "run_powershell", "description": "Run a command via PowerShell (only present when command execution is enabled)" },
+    { "name": "run_command", "description": "Run a command via an explicitly chosen shell: bash, sh, cmd, or powershell (only present when command execution is enabled)" }
+  ],
+  "keywords": ["filesystem", "files","command", "execution", "shell", "automation"],
+  "license": "MIT",
+  "compatibility": {
+    "claude_desktop": ">=1.0.0",
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  }
+}

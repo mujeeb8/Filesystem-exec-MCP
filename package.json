@@ -1,0 +1,23 @@
+{
+  "name": "filesystem-exec-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server exposing filesystem tools plus shell/bash/cmd/powershell command execution",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "filesystem-exec-mcp-server": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc && node --input-type=module -e \"import fs from 'node:fs'; fs.chmodSync('dist/index.js', 0o755);\"",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}
