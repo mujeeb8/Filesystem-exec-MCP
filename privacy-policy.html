@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filesystem + Exec — Privacy Policy</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --border: #262b35;
+    --text: #e6e8eb;
+    --muted: #9aa3b2;
+    --accent: #7aa2f7;
+    --good-bg: #16241c;
+    --good-border: #2f6b48;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 96px; }
+  header { margin-bottom: 32px; }
+  header .badge {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(122,162,247,0.12);
+    border: 1px solid rgba(122,162,247,0.35);
+    border-radius: 999px;
+    padding: 4px 10px;
+    margin-bottom: 14px;
+  }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  .updated { color: var(--muted); font-size: 13px; }
+  h2 {
+    font-size: 17px;
+    margin: 34px 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  p, li { color: #d2d5db; }
+  ul { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .summary {
+    background: var(--good-bg);
+    border: 1px solid var(--good-border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 20px 0;
+  }
+  .summary strong { color: #7fd99a; }
+  code {
+    font-family: "SF Mono", Consolas, Menlo, monospace;
+    font-size: 13px;
+    background: #1c2029;
+    padding: 2px 6px;
+    border-radius: 5px;
+    color: #c9d1d9;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th { color: var(--muted); font-weight: 600; width: 30%; }
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="badge">Privacy Policy</span>
+    <h1>Filesystem + Exec — Privacy Policy</h1>
+    <p class="updated">Last updated: 26 July 2026</p>
+  </header>
+
+  <div class="summary">
+    <strong>Short version:</strong> this extension runs entirely on your own computer. It does not send any data
+    anywhere, does not use the network, does not include analytics or telemetry, and does not have any account,
+    server, or third party involved. Everything it does, it does locally, using the permissions you explicitly grant.
+  </div>
+
+  <h2>What this extension is</h2>
+  <p>
+    Filesystem + Exec is a Model Context Protocol (MCP) server that runs locally as a Claude Desktop Extension
+    (<code>.mcpb</code>). It gives a connected AI agent tools to read, write, search, and organize files within
+    directories you choose, and — only if you separately enable it — tools to run shell commands on your machine.
+  </p>
+
+  <h2>What data it accesses</h2>
+  <table>
+    <tr><th>Data type</th><td>Files and directories inside the "Allowed Directories" you configure at install time. Nothing outside those directories is reachable by any tool in this extension.</td></tr>
+    <tr><th>Command output</th><td>If you enable command execution, the standard output, standard error, and exit code of commands you (via the connected AI agent) choose to run.</td></tr>
+  </table>
+
+  <h2>What data it collects, stores, or transmits</h2>
+  <p><strong>None.</strong> Specifically:</p>
+  <ul>
+    <li>This extension makes no network requests of any kind. There is no telemetry, analytics, crash reporting, or "phone home" behavior anywhere in the code.</li>
+    <li>It does not persist any data beyond the direct effect of the file operations you ask it to perform (e.g. a file you asked it to write stays written — the extension itself keeps no separate log or copy of your data).</li>
+    <li>It does not read, query, or have any access to your Claude conversation history or memory.</li>
+    <li>It has no user accounts, authentication, or associated backend service. There is nothing for us to store on our end because there is no "our end" — the server runs entirely inside your Claude Desktop installation, on your machine.</li>
+  </ul>
+
+  <h2>Third parties</h2>
+  <p>None. No data is shared with any third party, because no data leaves your machine in the first place.</p>
+
+  <h2>Command execution tool (optional)</h2>
+  <p>
+    If you explicitly enable command execution in the extension's settings, the connected AI agent gains the ability
+    to run shell commands with your user account's privileges, scoped to a working directory inside your Allowed
+    Directories. This is a powerful capability: a command you approve could read, modify, or transmit data on your
+    system depending on what that specific command does. This extension does not restrict what a command can do once
+    it runs — it only restricts the working directory the command starts in. This setting defaults to <strong>off</strong>,
+    and we recommend leaving it off unless you have a specific, understood need for it.
+  </p>
+
+  <h2>Children's privacy</h2>
+  <p>This extension is a developer tool for use with Claude Desktop and is not directed at children. It collects no personal data from anyone, of any age.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If this policy changes, the updated version will be published at this same location with a revised "Last updated" date, and noted in the project's release notes on GitHub.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy or the extension's behavior can be raised via the project's GitHub Issues page.</p>
+
+  <footer>
+    See <a href="documentation.html">Documentation</a> for setup and usage instructions.
+  </footer>
+
+</div>
+</body>
+</html>
