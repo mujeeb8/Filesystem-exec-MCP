@@ -510,8 +510,8 @@ async function runCommand(
   } catch (err: any) {
     const timedOut = err.killed && err.signal === "SIGTERM";
     return {
-      stdout: err.stdout ?? "",
-      stderr: err.stderr ?? String(err.message ?? err),
+      stdout: err.stdout || "",
+      stderr: err.stderr || String(err.message ?? err),
       exitCode: typeof err.code === "number" ? err.code : null,
       timedOut,
     };
@@ -616,8 +616,8 @@ if (allowExec) {
         return { content: [{ type: "text", text: formatExecResult({ stdout, stderr, exitCode: 0, timedOut: false }) }] };
       } catch (err: any) {
         const result: ExecResult = {
-          stdout: err.stdout ?? "",
-          stderr: err.stderr ?? String(err.message ?? err),
+          stdout: err.stdout || "",
+          stderr: err.stderr || String(err.message ?? err),
           exitCode: typeof err.code === "number" ? err.code : null,
           timedOut: !!err.killed,
         };
