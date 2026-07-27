@@ -126,6 +126,7 @@ server.registerTool(
     title: "Read text file",
     description:
       "Read the complete contents of a text file. Optionally read only the first N lines (head) or last N lines (tail).",
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: {
       path: z.string().describe("Path to the file to read"),
       head: z.number().int().positive().optional().describe("Return only the first N lines"),
@@ -153,6 +154,7 @@ server.registerTool(
   {
     title: "Read media/binary file",
     description: "Read a file and return it as base64-encoded content with its detected MIME type.",
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: {
       path: z.string().describe("Path to the media/binary file to read"),
     },
@@ -190,6 +192,7 @@ server.registerTool(
   {
     title: "Read multiple files",
     description: "Read the contents of multiple text files in a single call.",
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: {
       paths: z.array(z.string()).describe("Paths of files to read"),
     },
@@ -215,6 +218,7 @@ server.registerTool(
   {
     title: "Write file",
     description: "Create a new file or completely overwrite an existing file with new content.",
+    annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       path: z.string().describe("Path to the file to write"),
       content: z.string().describe("Content to write to the file"),
@@ -236,6 +240,7 @@ server.registerTool(
     title: "Edit file",
     description:
       "Make line-based edits to a text file. Each edit replaces an exact block of oldText with newText. Set dryRun to preview a unified diff without writing.",
+    annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       path: z.string().describe("Path to the file to edit"),
       edits: z
@@ -277,6 +282,7 @@ server.registerTool(
   {
     title: "Create directory",
     description: "Create a new directory (and parents as needed), or succeed silently if it already exists.",
+    annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: { path: z.string() },
   },
   async ({ path: p }) => {
@@ -295,6 +301,7 @@ server.registerTool(
   {
     title: "List directory",
     description: "List files and directories directly inside a given path.",
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: { path: z.string() },
   },
   async ({ path: p }) => {
@@ -310,6 +317,7 @@ server.registerTool(
   {
     title: "List directory with sizes",
     description: "List directory contents including file sizes, optionally sorted by name or size.",
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: {
       path: z.string(),
       sortBy: z.enum(["name", "size"]).optional(),
@@ -338,6 +346,7 @@ server.registerTool(
   {
     title: "Directory tree",
     description: "Get a recursive JSON tree view of files and directories under a path.",
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: {
       path: z.string(),
       maxDepth: z.number().int().positive().max(20).optional(),
@@ -378,6 +387,7 @@ server.registerTool(
   {
     title: "Move or rename file/directory",
     description: "Move or rename a file or directory.",
+    annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     inputSchema: { source: z.string(), destination: z.string() },
   },
   async ({ source, destination }) => {
@@ -397,6 +407,7 @@ server.registerTool(
   {
     title: "Search files",
     description: "Recursively search for files/directories whose name matches a pattern (case-insensitive substring).",
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: {
       path: z.string(),
       pattern: z.string(),
@@ -437,6 +448,7 @@ server.registerTool(
   {
     title: "Get file info",
     description: "Get metadata (size, timestamps, type, permissions) about a file or directory.",
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: { path: z.string() },
   },
   async ({ path: p }) => {
@@ -460,6 +472,7 @@ server.registerTool(
   {
     title: "List allowed directories",
     description: "Return the list of root directories this server is allowed to access for filesystem tools.",
+    annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     inputSchema: {},
   },
   async () => {
@@ -533,6 +546,7 @@ if (allowExec) {
       title: "Run bash command",
       description:
         "Execute a command using bash (/bin/bash -c). Full arbitrary command execution with the privileges of the server process. Use with caution.",
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true },
       inputSchema: { command: z.string(), cwd: cwdSchema, timeout: timeoutSchema },
     },
     async ({ command, cwd, timeout }) => {
@@ -547,6 +561,7 @@ if (allowExec) {
       title: "Run POSIX shell command",
       description:
         "Execute a command using the system default POSIX shell (/bin/sh -c). Full arbitrary command execution. Use with caution.",
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true },
       inputSchema: { command: z.string(), cwd: cwdSchema, timeout: timeoutSchema },
     },
     async ({ command, cwd, timeout }) => {
@@ -561,6 +576,7 @@ if (allowExec) {
       title: "Run Windows cmd.exe command",
       description:
         "Execute a command using Windows cmd.exe (/c). Only works on Windows hosts. Full arbitrary command execution. Use with caution.",
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true },
       inputSchema: { command: z.string(), cwd: cwdSchema, timeout: timeoutSchema },
     },
     async ({ command, cwd, timeout }) => {
@@ -581,6 +597,7 @@ if (allowExec) {
       title: "Run PowerShell command",
       description:
         "Execute a command using PowerShell (pwsh if available, else powershell.exe). Full arbitrary command execution. Use with caution.",
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true },
       inputSchema: { command: z.string(), cwd: cwdSchema, timeout: timeoutSchema },
     },
     async ({ command, cwd, timeout }) => {
@@ -615,6 +632,7 @@ if (allowExec) {
       title: "Run command (generic)",
       description:
         "Execute a command using an explicitly chosen shell: 'bash', 'sh', 'cmd', or 'powershell'. Full arbitrary command execution. Use with caution.",
+      annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: true },
       inputSchema: {
         command: z.string(),
         shell: z.enum(["bash", "sh", "cmd", "powershell"]).default("bash"),
