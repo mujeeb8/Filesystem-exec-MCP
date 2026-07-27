@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filesystem + Exec — Documentation</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --border: #262b35;
+    --text: #e6e8eb;
+    --muted: #9aa3b2;
+    --accent: #7aa2f7;
+    --warn-bg: #2a1b1b;
+    --warn-border: #7f3b3b;
+    --code-bg: #1c2029;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 48px 24px 96px; }
+  header { margin-bottom: 40px; }
+  header .badge {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(122,162,247,0.12);
+    border: 1px solid rgba(122,162,247,0.35);
+    border-radius: 999px;
+    padding: 4px 10px;
+    margin-bottom: 14px;
+  }
+  h1 { font-size: 28px; margin: 0 0 8px; }
+  .subtitle { color: var(--muted); font-size: 15px; margin: 0; }
+  h2 {
+    font-size: 18px;
+    margin: 40px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  p { color: #d2d5db; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 16px 0;
+  }
+  .warn {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 20px 0;
+  }
+  .warn strong { color: #ff8a8a; }
+  code, pre {
+    font-family: "SF Mono", Consolas, Menlo, monospace;
+    font-size: 13.5px;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    margin: 10px 0;
+  }
+  code.inline {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 5px;
+    color: #c9d1d9;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  th { color: var(--muted); font-weight: 600; }
+  ol, ul { color: #d2d5db; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <span class="badge">MCP Desktop Extension</span>
+    <h1>Filesystem + Exec</h1>
+    <p class="subtitle">Filesystem tools and optional command execution for Claude Desktop, jailed to directories you choose.</p>
+  </header>
+
+  <h2>What this extension does</h2>
+  <p>
+    Filesystem + Exec is a local MCP server packaged as a <code class="inline">.mcpb</code> Desktop Extension.
+    Once installed, it gives Claude two sets of capabilities:
+  </p>
+  <ul>
+    <li><strong>Filesystem tools</strong> (always on): read, write, edit, search, move files, and walk directory trees — restricted to one or more directories you approve during setup.</li>
+    <li><strong>Command execution tools</strong> (off by default): <code class="inline">run_bash</code>, <code class="inline">run_shell</code>, <code class="inline">run_cmd</code>, <code class="inline">run_powershell</code>, and <code class="inline">run_command</code>, which run real shell commands on your machine.</li>
+  </ul>
+
+  <div class="warn">
+    <strong>Command execution is high-privilege.</strong> When enabled, the connected AI agent can run any command your
+    user account can run — installing packages, deleting files, changing settings — with no sandboxing beyond the
+    working-directory restriction on the exec tools' <code class="inline">cwd</code>. Leave this off unless you have
+    a specific reason to enable it, and only use it with clients you trust.
+  </div>
+
+  <h2>Installing</h2>
+  <ol>
+    <li>Download the latest <code class="inline">.mcpb</code> file from the GitHub Releases page.</li>
+    <li>In Claude Desktop, go to <strong>Settings → Extensions → Advanced settings → Install Extension…</strong></li>
+    <li>Select the downloaded <code class="inline">.mcpb</code> file.</li>
+    <li>You'll be prompted to configure:
+      <table>
+        <tr><th>Setting</th><th>Description</th></tr>
+        <tr><td>Allowed Directories</td><td>One or more folders the server may access. Nothing outside these is reachable.</td></tr>
+        <tr><td>Enable command execution</td><td>Off by default. Turn on only if you need the exec tools above.</td></tr>
+      </table>
+    </li>
+    <li>Restart Claude Desktop if prompted, then look for the tools icon in the chat input to confirm it's connected.</li>
+  </ol>
+
+  <h2>Available tools</h2>
+  <p><strong>Always available:</strong></p>
+  <table>
+    <tr><th>Tool</th><th>Purpose</th></tr>
+    <tr><td><code class="inline">read_text_file</code></td><td>Read a text file, optionally just head/tail N lines</td></tr>
+    <tr><td><code class="inline">read_media_file</code></td><td>Read an image/binary file as base64</td></tr>
+    <tr><td><code class="inline">read_multiple_files</code></td><td>Read several files in one call</td></tr>
+    <tr><td><code class="inline">write_file</code></td><td>Create or fully overwrite a file</td></tr>
+    <tr><td><code class="inline">edit_file</code></td><td>Targeted find/replace edits, with dry-run preview</td></tr>
+    <tr><td><code class="inline">create_directory</code></td><td><code class="inline">mkdir -p</code> semantics</td></tr>
+    <tr><td><code class="inline">list_directory</code></td><td>Shallow directory listing</td></tr>
+    <tr><td><code class="inline">list_directory_with_sizes</code></td><td>Shallow listing with file sizes, sortable</td></tr>
+    <tr><td><code class="inline">directory_tree</code></td><td>Recursive JSON tree of a directory</td></tr>
+    <tr><td><code class="inline">move_file</code></td><td>Move or rename a file or directory</td></tr>
+    <tr><td><code class="inline">search_files</code></td><td>Recursive case-insensitive filename search</td></tr>
+    <tr><td><code class="inline">get_file_info</code></td><td>Stat a path — size, timestamps, permissions</td></tr>
+    <tr><td><code class="inline">list_allowed_directories</code></td><td>Show the configured allowed root directories</td></tr>
+  </table>
+
+  <p><strong>Only present when command execution is enabled:</strong></p>
+  <table>
+    <tr><th>Tool</th><th>Purpose</th></tr>
+    <tr><td><code class="inline">run_bash</code></td><td>Run a command via <code class="inline">/bin/bash -c</code> (macOS/Linux)</td></tr>
+    <tr><td><code class="inline">run_shell</code></td><td>Run a command via <code class="inline">/bin/sh -c</code> (POSIX)</td></tr>
+    <tr><td><code class="inline">run_cmd</code></td><td>Run a command via Windows <code class="inline">cmd.exe</code> (Windows only)</td></tr>
+    <tr><td><code class="inline">run_powershell</code></td><td>Run a command via PowerShell (<code class="inline">powershell.exe</code> on Windows, <code class="inline">pwsh</code> elsewhere)</td></tr>
+    <tr><td><code class="inline">run_command</code></td><td>Generic — pick the shell explicitly: bash, sh, cmd, or powershell</td></tr>
+  </table>
+
+  <h2>Platform notes</h2>
+  <p>Filesystem tools work identically on Windows, macOS, and Linux. For the exec tools:</p>
+  <ul>
+    <li><code class="inline">run_cmd</code> only works on Windows — on macOS/Linux it returns a clear error instead of failing silently.</li>
+    <li><code class="inline">run_powershell</code> requires PowerShell Core (<code class="inline">pwsh</code>) to be separately installed on macOS/Linux; it is not bundled.</li>
+    <li><code class="inline">run_bash</code> and <code class="inline">run_shell</code> work natively on macOS and Linux, and require WSL or Git Bash on Windows.</li>
+  </ul>
+
+  <h2>Example prompts</h2>
+  <pre>List everything in my allowed project folder.
+Read the first 20 lines of config.yaml.
+Find every file with "test" in the name under this directory.
+Rename draft.md to final.md.</pre>
+
+  <h2>Troubleshooting</h2>
+  <ul>
+    <li>If tools don't appear after install, fully quit and reopen Claude Desktop (not just close the window).</li>
+    <li>A <code class="inline">PathAccessError</code> means a requested path fell outside your configured allowed directories — add the directory via the extension's settings rather than trying alternate paths.</li>
+    <li>Enable debug logging in Claude Desktop's settings to see extension-level logs if a tool call fails unexpectedly.</li>
+  </ul>
+
+  <footer>
+    See <a href="privacy-policy.html">Privacy Policy</a> for details on what data this extension does and does not collect.
+  </footer>
+
+</div>
+</body>
+</html>
