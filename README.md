@@ -1,7 +1,26 @@
-# filesystem-exec-mcp-server
+<div align="center">
+  <img src="icon.png" alt="Filesystem + Exec icon" width="120" height="120" />
 
-A Model Context Protocol (MCP) server, written in TypeScript with the official
-`@modelcontextprotocol/sdk`, that exposes:
+  <h1>Filesystem + Exec</h1>
+
+  <p>
+    A Model Context Protocol (MCP) server that gives an AI agent a full set of
+    <strong>filesystem tools</strong> and optional <strong>command execution</strong>,
+    packaged as a one-click <code>.mcpb</code> extension for Claude Desktop.
+  </p>
+
+  <p>
+    <img alt="version" src="https://img.shields.io/badge/version-1.0.0-blue" />
+    <img alt="license" src="https://img.shields.io/badge/license-MIT-green" />
+    <img alt="platforms" src="https://img.shields.io/badge/platforms-darwin%20%7C%20win32%20%7C%20linux-lightgrey" />
+    <img alt="node" src="https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen" />
+  </p>
+</div>
+
+---
+
+`filesystem-exec-mcp-server` is written in TypeScript with the official
+`@modelcontextprotocol/sdk` and exposes:
 
 - A full set of **filesystem tools** (read, write, edit, search, move, tree, etc.),
   jailed to one or more directories you specify.
@@ -9,7 +28,42 @@ A Model Context Protocol (MCP) server, written in TypeScript with the official
   `run_powershell`, and a generic `run_command` — that run arbitrary commands
   on the host machine.
 
-## Install
+## 📦 The `.mcpb` file
+
+This repo builds and ships **`filesystem-mcpb.mcpb`**, a single-file
+[MCP Bundle](https://github.com/modelcontextprotocol/mcpb) that packages the
+compiled server, its dependencies, `manifest.json`, and `icon.png` into one
+installable archive. It lets Claude Desktop install this whole server with a
+double-click — no `npm install`, no manual config file editing.
+
+### How to use it
+
+1. **Get the file** — download `filesystem-mcpb.mcpb` from this repo (or build
+   it yourself, see [Building the `.mcpb`](#-building-the-mcpb) below).
+2. **Install it**, using any of:
+   - Double-click `filesystem-mcpb.mcpb`
+   - Drag and drop it into the Claude Desktop window
+   - In Claude Desktop: **Settings → Extensions → Advanced settings → Install
+     Extension…**, then select the file
+3. **Configure it** — Claude Desktop shows a setup screen for the two options
+   defined in `manifest.json`:
+   - **Allowed Directories** — the only folder(s) the server can touch (defaults
+     to `~/Desktop`)
+   - **Enable command execution** — off by default; only turn this on if you
+     want the agent to be able to run shell commands
+4. **Use it** — once installed, the tools listed below become available to
+   Claude in any conversation, scoped to whatever directories you approved.
+
+### 🔨 Building the `.mcpb`
+
+```bash
+npm install -g @anthropic-ai/mcpb   # once, if you don't have the CLI
+npm install
+npm run build                       # compiles src/index.ts -> dist/index.js
+mcpb pack                           # bundles dist/, manifest.json, icon.png -> .mcpb
+```
+
+## Install (from source)
 
 ```bash
 npm install
