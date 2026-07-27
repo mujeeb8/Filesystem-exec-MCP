@@ -28,7 +28,7 @@
   `run_powershell`, and a generic `run_command` — that run any commands
   on the host machine but you can switch it on and off by setting up `ALLOW-EXEC` env to `true` or `false` or if you are using `.mcpb` file than directly in Claude Desktop by switching a button in settings --> Extensions --> Filesystem + Exec's config.
 
-## 📦 The `.mcpb` file
+## The `.mcpb` file
 
 This repo builds and ships **`filesystem-mcpb.mcpb`**, a single-file
 [MCP Bundle](https://github.com/modelcontextprotocol/mcpb) that packages the
@@ -38,7 +38,7 @@ double-click — no `npm install`, no manual config file editing.
 
 ### How to use it
 
-1. **Get the file** — download `filesystem-mcpb.mcpb` from the or Release
+1. **Get the file** — download `filesystem-mcpb.mcpb` from the or [Releases](https://github.com/mujeeb8/Filesystem-exec-MCP/releases)
    or build it by yourself, see [Building the `.mcpb`](#-building-the-mcpb).
 2. **Install it**:
    - In Claude Desktop: **Settings → Extensions → Advanced settings → Install
@@ -52,7 +52,7 @@ double-click — no `npm install`, no manual config file editing.
    Claude in any conversation, scoped to whatever directories you approved.
 5. **Done**
 
-### 🔨 Building the `.mcpb`
+### Building the `.mcpb`
 
 ```bash
 npm install -g @anthropic-ai/mcpb   # once, if you don't have the CLI
