@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "Filesystem-Exec-MCP",
   "display_name": "Filesystem + Exec",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "icon": "icon.png",
   "description": "Filesystem tools (read/write/edit/search/move/tree) jailed to chosen directories, plus optional bash/sh/cmd/powershell command execution.",
   "long_description": "A Model Context Protocol server that gives an AI agent a full set of filesystem tools — reading, writing, editing, searching, moving files, and walking directory trees — restricted to one or more directories you choose. It can optionally also expose command-execution tools (`run_bash`, `run_shell`, `run_cmd`, `run_powershell`, `run_command`) that run arbitrary shell commands on the host with your user privileges.\n\n**Command execution is off by default.** Turn it on only if you understand that it grants the connected agent the ability to run anything your user account can run, with no sandboxing beyond the working-directory restriction.",
