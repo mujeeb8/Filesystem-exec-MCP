@@ -19,14 +19,14 @@
 
 ---
 
-`filesystem-exec-mcp-server` is written in TypeScript with the official
+`filesystem-exec-mcp` server is written in TypeScript with the official
 `@modelcontextprotocol/sdk` and exposes:
 
 - A full set of **filesystem tools** (read, write, edit, search, move, tree, etc.),
   jailed to one or more directories you specify.
 - **Command execution tools** — `run_bash`, `run_shell`, `run_cmd`,
-  `run_powershell`, and a generic `run_command` — that run arbitrary commands
-  on the host machine.
+  `run_powershell`, and a generic `run_command` — that run any commands
+  on the host machine but you can switch it on and off by setting up `ALLOW-EXEC` env to `true` or `false` or if you are using `.mcpb` file than directly in Claude Desktop by switching a button in settings --> Extensions --> Filesystem + Exec's config.
 
 ## 📦 The `.mcpb` file
 
@@ -38,21 +38,19 @@ double-click — no `npm install`, no manual config file editing.
 
 ### How to use it
 
-1. **Get the file** — download `filesystem-mcpb.mcpb` from this repo (or build
-   it yourself, see [Building the `.mcpb`](#-building-the-mcpb) below).
-2. **Install it**, using any of:
-   - Double-click `filesystem-mcpb.mcpb`
-   - Drag and drop it into the Claude Desktop window
+1. **Get the file** — download `filesystem-mcpb.mcpb` from the or Release
+   or build it by yourself, see [Building the `.mcpb`](#-building-the-mcpb).
+2. **Install it**:
    - In Claude Desktop: **Settings → Extensions → Advanced settings → Install
-     Extension…**, then select the file
-3. **Configure it** — Claude Desktop shows a setup screen for the two options
-   defined in `manifest.json`:
+     Extension…**, then select the `filesystem-mcpb.mcpb` file
+3. **Configure it** — Claude Desktop shows a setup screen for the two options:
    - **Allowed Directories** — the only folder(s) the server can touch (defaults
      to `~/Desktop`)
    - **Enable command execution** — off by default; only turn this on if you
      want the agent to be able to run shell commands
 4. **Use it** — once installed, the tools listed below become available to
    Claude in any conversation, scoped to whatever directories you approved.
+5. **Done**
 
 ### 🔨 Building the `.mcpb`
 
@@ -92,7 +90,7 @@ node dist/index.js /path/to/allowed/dir1 /path/to/allowed/dir2 --allow-exec
 The server speaks MCP over stdio, so it's meant to be launched by an MCP
 client, not used interactively.
 
-## Configure in an MCP client (e.g. Claude Desktop / Claude Code)
+## Configure in an MCP client (e.g. Claude Desktop) Manually
 
 Add to your client's MCP server config (e.g.
 `claude_desktop_config.json`):
@@ -112,7 +110,7 @@ Add to your client's MCP server config (e.g.
 }
 ```
 
-Remove `--allow-exec` if you only want the filesystem tools.
+Remove `--allow-exec` if you don't want to use command execution tools.
 
 ## Tools
 
