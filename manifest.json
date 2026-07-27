@@ -1,6 +1,6 @@
 {
   "manifest_version": "0.3",
-  "name": "filesystem-exec-mcp-server",
+  "name": "Filesystem-Exec-MCP",
   "display_name": "Filesystem + Exec",
   "version": "1.0.0",
   "icon": "icon.png",
